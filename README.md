@@ -1,187 +1,175 @@
-# Blandford-Znajek Black Hole Simulation v2.0
+# Blandford-Znajek Black Hole Jet Simulation
 
-## 🌌 Overview
-Enhanced modular version of the Blandford-Znajek black hole jet simulation with improved architecture, better organization, and enhanced maintainability.
+A high-performance, visually stunning simulation of relativistic astrophysical jets powered by rotating black holes. Features an optimized dark-themed interface, glowing plasma effects, and realistic cosmic environments.
 
-## 🏗️ Architecture
+![Black Hole Jet Simulation](https://img.shields.io/badge/Physics-Relativistic%20Jets-blue) ![Performance](https://img.shields.io/badge/Performance-Optimized-green) ![UI](https://img.shields.io/badge/UI-Dark%20Theme-black)
 
-### Directory Structure
+## ✨ Key Features
+
+### 🌌 **Realistic Cosmic Environment**
+- **3000+ Star Field** - Procedurally generated cosmic background
+- **Deep Space Atmosphere** - Authentic dark matter appearance
+- **Galaxy-free Design** - Clean visualization without distracting elements
+
+### ⚡ **High-Performance Jet Rendering**
+- **Ultra-Thin Jets** - Precise, collimated relativistic streams
+- **Volumetric Glow Effects** - 800+ particle-based plasma glow
+- **Optimized Geometry** - Streamlined for smooth real-time performance
+- **No Sheath Clutter** - Clean jet visualization without unnecessary complexity
+
+### 🎨 **Modern Dark UI**
+- **Professional Dark Theme** - Easy on the eyes for extended use
+- **Flexible Panel Layout** - Responsive design that adapts to screen size
+- **No Horizontal Scrolling** - Optimized for all window sizes
+- **Enhanced Readability** - Proper text selection and contrast
+
+### 🚀 **Performance Optimizations**
+- **Simplified Physics** - Removed computationally expensive features
+- **Efficient Rendering** - Eliminated magnetic field lines and complex calculations
+- **Reduced Layer Count** - Streamlined visualization options
+- **Faster Startup** - Quick initialization and rendering
+
+## 📁 Project Structure
+
 ```
 blandford-znajek/
-├── src/                           # Main source code
-│   ├── main/                      # Application entry point
-│   │   ├── application.py         # Main application class
-│   │   └── __init__.py
-│   ├── ui/                        # User interface components
-│   │   ├── control_panel.py       # Physics parameter controls
-│   │   ├── info_panel.py          # Information display
-│   │   └── __init__.py
-│   ├── rendering/                 # 3D visualization and rendering
-│   │   ├── simulation_renderer.py # Main 3D renderer
-│   │   └── __init__.py
-│   ├── geometry/                  # 3D geometric components
-│   │   ├── black_hole.py          # Event horizon & ergosphere
-│   │   ├── accretion_disk.py      # Spiral disk geometry
-│   │   ├── jets.py                # Relativistic jets
-│   │   └── __init__.py
-│   ├── animation/                 # Time-based updates
-│   │   ├── animation_manager.py   # Animation control
-│   │   ├── disk_animator.py       # Disk motion updates
-│   │   └── __init__.py
-│   ├── physics/                   # Physics calculations
-│   │   ├── blandford_znajek.py    # BZ mechanism physics
-│   │   └── __init__.py
-│   ├── utils/                     # Utility functions
-│   │   ├── constants.py           # Physical constants
-│   │   ├── math_helpers.py        # Mathematical functions
-│   │   └── __init__.py
-│   └── __init__.py
-├── bzsim_v2.py                    # New main entry point
-├── bzsim.py                       # Original entry point (legacy)
-└── [original files...]           # Original monolithic files
+├── bzsim.py                 # Main executable - run this file
+├── physics.py              # Core Blandford-Znajek physics calculations
+├── geometry.py             # 3D mesh generation (jets, disk, black hole)
+└── visualizer/
+    ├── main_visualizer.py   # Primary application controller
+    ├── ui_controls.py       # User interface panels and controls
+    ├── rendering.py         # 3D scene rendering and effects
+    └── physics_calculations.py  # Real-time physics display
 ```
 
-## 🚀 Running the Simulation
+## 🎯 Current Visualization Layers
 
-### New Modular Version
+| Component | Description | Performance Impact |
+|-----------|-------------|-------------------|
+| **Black Hole** | Event horizon sphere | Minimal |
+| **Accretion Disk** | Hot plasma disk with temperature gradients | Low |
+| **Jet Spine** | Ultra-thin relativistic jets with glow effects | Medium |
+| **Cosmic Background** | 3000+ star field | Low |
+
+*Removed for performance: Photon ring, gravitational lensing, magnetic field lines, polarization vectors, jet sheath*
+
+## 🚀 Quick Start
+
+### Prerequisites
 ```bash
-python bzsim_v2.py
+pip install PyQt5 PyVista numpy
 ```
 
-### Legacy Version
+### Run the Simulation
 ```bash
 python bzsim.py
 ```
 
-## 🎯 Key Improvements
+### Controls
+- **Mouse**: Rotate, zoom, and pan around the black hole
+- **Left Panel**: Adjust black hole mass, spin, and magnetic field
+- **Right Panel**: View calculated physics parameters
+- **Layer Toggles**: Show/hide visualization components
 
-### 1. **Modular Architecture**
-- **Separation of Concerns**: Each module has a single responsibility
-- **Better Organization**: Related functionality grouped together
-- **Easier Maintenance**: Smaller, focused files are easier to understand and modify
+## ⚙️ Physics Parameters
 
-### 2. **Enhanced Components**
+### Black Hole Configuration
+- **Mass**: 10 M☉ (adjustable 1-100 M☉)
+- **Spin Parameter**: 0.9 (adjustable 0-0.999)
+- **Magnetic Field**: 10⁴ Gauss (adjustable 10²-10⁶ G)
 
-#### **Physics Module** (`src/physics/`)
-- Isolated physics calculations
-- Reusable BZ mechanism class
-- Clear parameter management
+### Jet Properties
+- **Base Radius**: 0.05 × Schwarzschild radius (ultra-thin)
+- **Expansion**: Conical opening to 0.8 × Schwarzschild radius
+- **Length**: 20 × Schwarzschild radius
+- **Velocity**: 95% speed of light
+- **Glow Particles**: 800 per jet for volumetric effects
 
-#### **Geometry Module** (`src/geometry/`)
-- **Black Hole**: Oblate event horizon and ergosphere
-- **Accretion Disk**: Spiral particle system with recycling
-- **Jets**: Proper relativistic jet geometry
+### Accretion Disk
+- **Temperature Profile**: Simple 1/r falloff for performance
+- **Color Mapping**: Hot plasma colormap
+- **Opacity**: 80% for balanced visibility
 
-#### **UI Module** (`src/ui/`)
-- **Control Panel**: Physics parameter controls
-- **Info Panel**: Real-time physics display
-- Clean separation of UI and logic
+## 🎨 Visual Enhancements
 
-#### **Rendering Module** (`src/rendering/`)
-- **3D Scene Management**: Centralized rendering control
-- **Component Integration**: Seamless geometry updates
-- **Lighting and Effects**: Enhanced visual quality
-
-#### **Animation Module** (`src/animation/`)
-- **Animation Manager**: Centralized timing control
-- **Component Animators**: Specialized animation handlers
-- **Performance Optimization**: Efficient update scheduling
-
-### 3. **Code Quality Improvements**
-- **Type Hints**: Better code documentation
-- **Error Handling**: Robust error management
-- **Documentation**: Comprehensive docstrings
-- **Constants**: Centralized configuration
-
-### 4. **Maintainability Benefits**
-- **Easier Testing**: Isolated components can be tested independently
-- **Faster Development**: Clear structure speeds up feature additions
-- **Bug Isolation**: Issues are easier to locate and fix
-- **Code Reuse**: Components can be reused across different visualizations
-
-## 📊 File Size Comparison
-
-### Before Refactoring
-- `enhanced_visualizer.py`: **1,615 lines** (too complex)
-- `visualizer.py`: **1,544 lines** (duplicate complexity)
-- Total complexity: **>3,000 lines** in 2 files
-
-### After Refactoring
-- Largest file: **~200 lines** (manageable)
-- Average file size: **~100 lines** (focused)
-- Total: **Same functionality** in **organized structure**
-
-## 🧩 Module Dependencies
-
-```
-application.py
-├── ui/
-│   ├── control_panel.py
-│   └── info_panel.py
-├── rendering/
-│   └── simulation_renderer.py
-│       ├── geometry/
-│       │   ├── black_hole.py
-│       │   ├── accretion_disk.py
-│       │   └── jets.py
-│       └── animation/
-│           └── disk_animator.py
-├── physics/
-│   └── blandford_znajek.py
-└── utils/
-    ├── constants.py
-    └── math_helpers.py
-```
-
-## 🔬 Physics Features
-
-- **Kerr Black Hole Geometry**: Oblate event horizon and ergosphere
-- **Spiral Accretion Disk**: Logarithmic spiral with particle recycling
-- **Relativistic Jets**: Proper jet geometry with collar expansion
-- **Real-time Calculations**: Live physics parameter updates
-- **Magnetic Field Lines**: Optional field line visualization
-
-## 🎮 User Interface
-
-- **Parameter Controls**: Mass, spin, magnetic field
-- **Animation Controls**: Play, pause, reset
-- **Visualization Options**: Toggle components on/off
-- **Real-time Display**: Live physics calculations
-- **Dark Theme**: Professional appearance
-
-## 🏃‍♂️ Performance
-
-- **Optimized Updates**: Components update at appropriate frequencies
-- **Efficient Rendering**: Smart mesh updates to prevent flashing
-- **Memory Management**: Proper resource cleanup
-- **Responsive UI**: Non-blocking animation system
-
-## 🔮 Future Enhancements
-
-The modular structure makes it easy to add:
-- **Additional Geometry Types**: Easy to add new 3D components
-- **Physics Models**: Plug in different physics calculations
-- **Rendering Effects**: Add post-processing effects
-- **Export Features**: Add data export capabilities
-- **Comparison Mode**: Side-by-side parameter comparison
-
-## 🧪 Development
-
-### Adding New Features
-1. Identify the appropriate module (geometry, physics, ui, etc.)
-2. Create focused, single-purpose classes
-3. Use existing utilities and constants
-4. Connect through the main application class
-
-### Testing Components
-Each module can be tested independently:
+### Jet Glow System
 ```python
-# Test physics calculations
-from src.physics.blandford_znajek import BlandfordZnajekJet
-physics = BlandfordZnajekJet(mass=10, spin=0.9, B=1e4)
-print(f"Power: {physics.L_BZ:.2e} erg/s")
+# Enhanced lighting properties
+ambient = 0.6      # Natural glow
+diffuse = 0.8      # Surface illumination  
+specular = 0.4     # Bright highlights
+opacity = 0.95     # Near-solid appearance
 ```
+
+### Cosmic Environment
+- **Star Distribution**: Spherical shell at 150× black hole radius
+- **Star Types**: White (60%), Blue (15%), Red (15%), Yellow (10%)
+- **Brightness Variation**: Exponential distribution for realism
+- **Background Color**: Deep cosmic blue (#010105)
+
+## 🔧 Performance Features
+
+### Optimization Strategies
+1. **Reduced Mesh Complexity** - Fewer geometric points
+2. **Simplified Physics** - Removed complex calculations
+3. **Efficient Memory Usage** - Streamlined data structures
+4. **Selective Updates** - Only update what's necessary
+5. **GPU-Optimized Rendering** - PyVista/VTK acceleration
+
+### Removed Features (for speed)
+- ❌ Photon ring calculations
+- ❌ Gravitational lensing effects  
+- ❌ Magnetic field line tracing
+- ❌ Polarization vector fields
+- ❌ Jet sheath complexity
+- ❌ Frame-dragging animations
+
+## 🔬 Scientific Accuracy
+
+While optimized for performance, the simulation maintains core physics:
+
+- **Blandford-Znajek Mechanism**: Energy extraction from rotating black holes
+- **Relativistic Jets**: Highly collimated plasma streams
+- **Temperature Gradients**: Realistic accretion disk heating
+- **Cosmic Scale**: Proper size relationships
+
+## 🎯 Ideal Use Cases
+
+- **Educational Demonstrations** - Teaching relativistic astrophysics
+- **Research Visualization** - Exploring jet morphology
+- **Public Outreach** - Engaging astronomy presentations  
+- **Performance Benchmarking** - Testing visualization systems
+
+## 🛠️ Recent Improvements
+
+### Version 2.0 Enhancements
+- ✅ Removed jet sheath for cleaner appearance
+- ✅ Added volumetric glow effects to jets
+- ✅ Implemented responsive UI layout
+- ✅ Applied professional dark theme
+- ✅ Optimized rendering performance
+- ✅ Enhanced cosmic background
+- ✅ Streamlined physics calculations
+
+## 📝 Development Notes
+
+This simulation prioritizes **visual impact** and **performance** over complete physical accuracy. Complex relativistic effects have been simplified or removed to ensure smooth real-time interaction on standard hardware.
+
+For research-grade simulations requiring full general relativistic calculations, consider specialized codes like GRMHD simulations.
+
+## 🤝 Contributing
+
+Contributions welcome! Focus areas:
+- Additional visual effects
+- Performance optimizations  
+- UI/UX improvements
+- Educational features
+
+## 📄 License
+
+Open source - feel free to use and modify for educational and research purposes.
 
 ---
+*Simulating the most powerful phenomena in the universe* 🌌
 
-**🌟 The refactored version maintains all original functionality while providing a solid foundation for future development and maintenance.**
