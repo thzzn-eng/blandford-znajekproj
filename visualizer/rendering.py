@@ -201,7 +201,7 @@ class RenderingEngine:
             traceback.print_exc()
     
     def create_accretion_disk(self):
-        """Create spinning accretion disk based on black hole spin parameter"""
+        """Create simplified accretion disk for better performance"""
         if not self.visualizer.layer_states.get('accretion_disk', True):
             return
             
@@ -210,7 +210,7 @@ class RenderingEngine:
             disk_mesh, _ = self.visualizer.geometry.create_thick_accretion_disk()
             
             if disk_mesh is not None and disk_mesh.n_points > 0:
-                # Calculate spinning disk properties
+                # Simple temperature calculation based on distance
                 points = disk_mesh.points
                 distances = np.sqrt(points[:, 0]**2 + points[:, 1]**2 + points[:, 2]**2)
                 bh_radius = self.visualizer.geometry.bh_radius
@@ -220,15 +220,10 @@ class RenderingEngine:
                 temperatures = 1.0 / (r_norm + 0.1)  # Simple falloff
                 temperatures = np.clip(temperatures, 0.1, 2.0)
                 
-                # Add rotation effects based on spin parameter
-                spin_effects = self.calculate_disk_rotation(points)
-                enhanced_temperatures = temperatures * (0.8 + 0.2 * spin_effects)
+                # Set simplified mesh properties
+                disk_mesh['temperature'] = temperatures
                 
-                # Set mesh properties with rotation effects
-                disk_mesh['temperature'] = enhanced_temperatures
-                disk_mesh['rotation'] = spin_effects
-                
-                # Create spinning plasma material
+                # Create simplified plasma material
                 self.plotter.add_mesh(disk_mesh,
                                     scalars='temperature',
                                     cmap='hot',
@@ -237,37 +232,6 @@ class RenderingEngine:
                                     
         except Exception as e:
             print(f"Accretion disk creation failed: {e}")
-    
-    def calculate_disk_rotation(self, points):
-        """Calculate rotation effects based on black hole spin parameter"""
-        # Get spin parameter from the black hole
-        spin = self.visualizer.jet.spin  # a parameter (0 to 0.999)
-        
-        # Convert to cylindrical coordinates
-        r_cyl = np.sqrt(points[:, 0]**2 + points[:, 1]**2)
-        theta = np.arctan2(points[:, 1], points[:, 0])
-        
-        bh_radius = self.visualizer.geometry.bh_radius
-        r_norm = r_cyl / bh_radius
-        
-        # Keplerian velocity profile modified by spin
-        # Faster rotation for higher spin, inner regions rotate faster
-        base_rotation = 1.0 / np.sqrt(r_norm + 0.1)  # Keplerian falloff
-        
-        # Spin enhancement - higher spin increases rotation rate
-        spin_factor = 1.0 + spin * 2.0  # Boost factor based on spin
-        
-        # Frame dragging effect - stronger near the black hole for spinning BH
-        frame_drag = spin * np.exp(-r_norm / 2.0)  # Exponential falloff with distance
-        
-        # Time-dependent rotation for visualization
-        time_phase = self.visualizer.current_time * spin_factor * 0.5
-        rotation_pattern = np.sin(2 * theta - time_phase * base_rotation)
-        
-        # Combine effects
-        total_rotation = base_rotation * spin_factor * (0.7 + 0.3 * rotation_pattern) + frame_drag
-        
-        return np.clip(total_rotation, 0.1, 3.0)
     
     # Removed complex plasma calculation methods for performance
 
